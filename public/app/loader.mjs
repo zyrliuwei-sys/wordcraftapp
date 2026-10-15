@@ -58,11 +58,31 @@ compatibility.textContent = label('Use compatibility mode', '使用兼容模式'
 document.getElementById('wordcraft_download').textContent = label('Download desktop app', '下载桌面版');
 document.getElementById('wordcraft_back').textContent = label('← Back to website', '← 返回网站');
 
+// The editor picks its interface language from navigator.languages. The stock
+// web build embeds no CJK, Arabic or Thai font, so those interfaces render as
+// "??" and empty boxes. Until a build with multilingual fonts is deployed
+// (build.mjs then exports multilingualFonts = true), run those visitors in
+// English. Documents keep whatever language they contain.
+const UNDRAWABLE_UI = /^(zh|ja|ko|ar|fa|th)\b/i;
+function pinDrawableInterfaceLanguage(hasMultilingualFonts) {
+  if (hasMultilingualFonts) return;
+  const preferred = navigator.languages?.[0] || navigator.language || '';
+  if (!UNDRAWABLE_UI.test(preferred)) return;
+  const english = Object.freeze(['en-US', 'en']);
+  try {
+    Object.defineProperty(navigator, 'languages', { get: () => english, configurable: true });
+    Object.defineProperty(navigator, 'language', { get: () => 'en-US', configurable: true });
+  } catch (error) {
+    console.warn('WordCraft: could not pin the interface language', error);
+  }
+}
+
 async function boot() {
   try {
     if (typeof WebAssembly === 'undefined') throw new Error('WebAssembly is unavailable.');
     startupTimer = setTimeout(() => fail(new Error('Editor scripts timed out.')), 45_000);
     const manifest = await import('./build.mjs');
+    pinDrawableInterfaceLanguage(manifest.multilingualFonts === true);
     const bindings = await import(manifest.javascript);
     clearTimeout(startupTimer);
     const response = await fetchWasm(manifest.wasm, ({ phase, received, total }) => {
