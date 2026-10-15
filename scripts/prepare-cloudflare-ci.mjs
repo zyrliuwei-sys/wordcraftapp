@@ -6,10 +6,11 @@ const config = JSON.parse(readFileSync('wrangler.production.json', 'utf8'));
 const vars = config.vars;
 
 if (
-  config.name !== 'hotel-lobby-ai' ||
+  !/^[a-z0-9][a-z0-9-]*$/.test(config.name ?? '') ||
   vars?.DATABASE_PROVIDER !== 'd1' ||
   !/^https:\/\//.test(vars.VITE_APP_URL) ||
-  !/^[0-9a-f-]{36}$/.test(config.d1_databases?.[0]?.database_id ?? '')
+  !/^[0-9a-f-]{36}$/.test(config.d1_databases?.[0]?.database_id ?? '') ||
+  config.d1_databases?.[0]?.binding !== 'DB'
 ) {
   throw new Error('Invalid production Worker config');
 }

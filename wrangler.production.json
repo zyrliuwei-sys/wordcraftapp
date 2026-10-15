@@ -16,9 +16,8 @@
       "binding": "DB",
       "database_name": "wordcraftapp",
       "database_id": "2eadb4fa-1d68-4d04-baf8-e665f2e8ec1e",
-      "migrations_dir": "drizzle"
+      "migrations_dir": "cloudflare/migrations"
     }
   ],
-  "triggers": { "crons": ["* * * * *"] },
   "routes": [{ "pattern": "wordcraftapp.com", "custom_domain": true }]
 }
