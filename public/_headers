@@ -1,0 +1,12 @@
+/app/
+  Cache-Control: no-cache
+/app/index.html
+  Cache-Control: no-cache
+/app/build.mjs
+  Cache-Control: no-cache
+/app/loader.mjs
+  Cache-Control: no-cache
+/app/wasm-loader.mjs
+  Cache-Control: no-cache
+/app/wordcraft-web-*
+  Cache-Control: public, max-age=31536000, immutable

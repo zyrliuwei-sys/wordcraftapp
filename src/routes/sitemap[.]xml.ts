@@ -5,9 +5,12 @@ import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
 
 const STATIC_PATHS = [
   '',
+  '/download',
+  '/online',
+  '/tutorials',
+  '/wordcraft-vs-microsoft-word',
   '/privacy-policy',
   '/terms-of-service',
-  '/acceptable-use-policy',
 ];
 
 type Entry = {

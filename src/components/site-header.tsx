@@ -8,7 +8,6 @@ import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
-import { LocaleSelector } from '@/components/locale-selector';
 import { SiteUserMenu } from '@/components/site-user-menu';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
@@ -20,15 +19,25 @@ export interface NavLink {
   external?: boolean;
 }
 
+export interface HeaderCta {
+  href: string;
+  label: string;
+}
+
 /** Off-site URLs render as plain <a>; internal paths use the locale-aware Link. */
 const isExternalHref = (href: string) => /^https?:\/\//.test(href);
+/** Static files under public/ (e.g. /app/index.html) are not router routes. */
+const isStaticFileHref = (href: string) => /\.[a-z0-9]+$/i.test(href);
 
 export function SiteHeader({
   navLinks,
   logoAlt,
+  cta,
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
+  /** Replaces the default "Get started" button for signed-out visitors. */
+  cta?: HeaderCta;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
@@ -36,7 +45,7 @@ export function SiteHeader({
 
   return (
     <header className="bg-background/95 border-border sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-[1264px] items-center justify-between px-4 sm:px-8">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5">
           <img
@@ -44,9 +53,9 @@ export function SiteHeader({
             alt={logoAlt}
             width={512}
             height={512}
-            className="size-8 rounded-full"
+            className="size-8"
           />
-          <span className="text-base font-bold tracking-tight">
+          <span className="font-display text-[21px] leading-none">
             {envConfigs.app_name}
           </span>
         </Link>
@@ -54,11 +63,11 @@ export function SiteHeader({
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks?.map((link) =>
-            isExternalHref(link.href) ? (
+            isExternalHref(link.href) || isStaticFileHref(link.href) ? (
               <a
                 key={link.href}
                 href={link.href}
-                target="_blank"
+                target={isExternalHref(link.href) ? '_blank' : undefined}
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground text-sm transition-colors"
               >
@@ -79,7 +88,6 @@ export function SiteHeader({
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-3 md:flex">
-          <LocaleSelector />
           <ThemeToggle />
           {user ? (
             <SiteUserMenu
@@ -87,6 +95,11 @@ export function SiteHeader({
               email={user.email}
               image={user.image}
             />
+          ) : cta ? (
+            <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
+              {cta.label}
+              <ArrowRight className="size-4" />
+            </a>
           ) : (
             <Link href="/settings" className={cn(buttonVariants(), 'gap-1.5')}>
               {m['common.nav.get_started']()}
@@ -111,11 +124,11 @@ export function SiteHeader({
         <div className="border-border border-t px-4 pt-2 pb-4 md:hidden">
           <nav className="flex flex-col gap-2">
             {navLinks?.map((link) =>
-              isExternalHref(link.href) ? (
+              isExternalHref(link.href) || isStaticFileHref(link.href) ? (
                 <a
                   key={link.href}
                   href={link.href}
-                  target="_blank"
+                  target={isExternalHref(link.href) ? '_blank' : undefined}
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-md px-3 py-2 text-sm transition-colors"
                   onClick={() => setMobileOpen(false)}
@@ -136,7 +149,6 @@ export function SiteHeader({
             )}
           </nav>
           <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
-            <LocaleSelector />
             <ThemeToggle />
             <div className="flex-1" />
             {user ? (
@@ -145,6 +157,10 @@ export function SiteHeader({
                 email={user.email}
                 image={user.image}
               />
+            ) : cta ? (
+              <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
+                {cta.label}
+              </a>
             ) : (
               <Link
                 href="/settings"

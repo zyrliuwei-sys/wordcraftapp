@@ -1,28 +1,32 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
-import {
-  HERO_DESKTOP_SIZES,
-  HERO_DESKTOP_WIDTHS,
-  HERO_MOBILE_MEDIA,
-  HERO_MOBILE_WIDTHS,
-  optSrcSet,
-} from '@/config/hotel-lobby-images';
+import { SCREENSHOTS, WORDCRAFT_OFFICIAL } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
 import { getLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
-import { HotelLobbyPage } from '@/blocks/hotel-lobby';
+import { ComparePreview } from '@/blocks/compare-table';
+import { DownloadBento } from '@/blocks/download-bento';
+import { Facts } from '@/blocks/facts';
+import { FAQ, faqItems } from '@/blocks/faq';
+import { FinalCta } from '@/blocks/final-cta';
+import { Footer } from '@/blocks/footer';
+import { Header } from '@/blocks/header';
+import { Hero } from '@/blocks/hero';
+import { OnlineSection } from '@/blocks/online-section';
+import { StartSteps } from '@/blocks/start-steps';
+import { Tour } from '@/blocks/tour';
+import { WhatIs } from '@/blocks/what-is';
+import { Why } from '@/blocks/why';
 
 export const Route = createFileRoute('/')({
   loader: () => ({ locale: getLocale() }),
   head: ({ loaderData }) => {
-    const locale = loaderData?.locale ?? 'en';
-    const title = m['common.metadata.title']({}, { locale: locale as any });
-    const description = m['common.metadata.description'](
-      {},
-      { locale: locale as any }
-    );
+    const locale = (loaderData?.locale ?? 'en') as (typeof locales)[number];
+    const title = m['common.metadata.title']({}, { locale });
+    const description = m['common.metadata.description']({}, { locale });
     const urlFor = (loc: string) =>
       localizeUrl(`${envConfigs.app_url}/`, { locale: loc as any }).href;
+    const image = `${envConfigs.app_url}${SCREENSHOTS.hero}-1600.webp`;
     return {
       meta: [
         { title },
@@ -30,39 +34,10 @@ export const Route = createFileRoute('/')({
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'website' },
-        {
-          property: 'og:image',
-          content: `${envConfigs.app_url}/imgs/generated/hotel-lobby-duet.png`,
-        },
+        { property: 'og:image', content: image },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
       links: [
-        // LCP: the hero <picture> sits behind <source>s, which the browser
-        // only discovers after layout — preload the matching rendition.
-        {
-          rel: 'preload',
-          as: 'image',
-          type: 'image/avif',
-          media: HERO_MOBILE_MEDIA,
-          imageSrcSet: optSrcSet('hero-mobile', HERO_MOBILE_WIDTHS, 'avif'),
-          imageSizes: '100vw',
-          fetchPriority: 'high',
-        },
-        {
-          rel: 'preload',
-          as: 'image',
-          type: 'image/avif',
-          media: '(min-width: 601px)',
-          imageSrcSet: optSrcSet('hero-desktop', HERO_DESKTOP_WIDTHS, 'avif'),
-          imageSizes: HERO_DESKTOP_SIZES,
-          fetchPriority: 'high',
-        },
-        {
-          rel: 'preload',
-          as: 'image',
-          type: 'image/webp',
-          href: '/imgs/generated/opt/studio-backdrop-960.webp',
-        },
         { rel: 'canonical', href: urlFor(locale) },
         ...locales.map((loc) => ({
           rel: 'alternate',
@@ -76,16 +51,61 @@ export const Route = createFileRoute('/')({
           type: 'application/ld+json',
           children: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'WebPage',
-            name: title,
-            description,
-            url: urlFor(locale),
+            '@type': 'WebSite',
+            name: envConfigs.app_name,
             inLanguage: locale,
-            primaryImageOfPage: `${envConfigs.app_url}/imgs/generated/hotel-lobby-duet.png`,
+            publisher: {
+              '@type': 'Organization',
+              name: envConfigs.app_name,
+              url: envConfigs.app_url,
+              email: m['wc.footer.support_email'](),
+            },
+            about: {
+              '@type': 'SoftwareApplication',
+              name: 'WordCraft',
+              url: WORDCRAFT_OFFICIAL,
+            },
+            url: urlFor(locale),
+            image,
+            description,
+          }),
+        },
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqItems().map((item) => ({
+              '@type': 'Question',
+              name: item.q,
+              acceptedAnswer: { '@type': 'Answer', text: item.a },
+            })),
           }),
         },
       ],
     };
   },
-  component: HotelLobbyPage,
+  component: HomePage,
 });
+
+function HomePage() {
+  return (
+    <div className="bg-background text-foreground flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1">
+        <Hero />
+        <Facts />
+        <WhatIs />
+        <DownloadBento />
+        <OnlineSection />
+        <Tour />
+        <Why />
+        <ComparePreview />
+        <StartSteps />
+        <FAQ />
+        <FinalCta />
+      </main>
+      <Footer />
+    </div>
+  );
+}

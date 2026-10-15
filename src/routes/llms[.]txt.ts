@@ -6,8 +6,33 @@ import { m } from '@/paraglide/messages.js';
 const STATIC_PAGES: { path: string; title: string; description: string }[] = [
   {
     path: '',
-    title: 'Hotel Lobby AI Filter',
-    description: 'Two-person duet planning and prompt guide',
+    title: 'WordCraft — free open-source Microsoft Word alternative',
+    description:
+      'Overview, download cards, screenshots, WordCraft vs Word summary and FAQ',
+  },
+  {
+    path: '/download',
+    title: 'Download WordCraft',
+    description:
+      'Official download links for Windows, macOS, Linux and FreeBSD, install steps, checksums and troubleshooting',
+  },
+  {
+    path: '/online',
+    title: 'Use WordCraft online',
+    description:
+      'Run the official WordCraft web build in the browser (WebAssembly), no install',
+  },
+  {
+    path: '/tutorials',
+    title: 'WordCraft basics tutorial',
+    description:
+      'Ribbon, styles, lists, tables, track changes, references, PDF export, shortcuts, CLI and MCP',
+  },
+  {
+    path: '/wordcraft-vs-microsoft-word',
+    title: 'WordCraft vs Microsoft Word',
+    description:
+      'Price, license, platforms, file compatibility, offline use, AI, collaboration and maturity compared',
   },
   {
     path: '/privacy-policy',
@@ -18,11 +43,6 @@ const STATIC_PAGES: { path: string; title: string; description: string }[] = [
     path: '/terms-of-service',
     title: 'Terms of Service',
     description: 'Terms of use',
-  },
-  {
-    path: '/acceptable-use-policy',
-    title: 'Acceptable Use Policy',
-    description: 'Content rules, child safety and how to report violations',
   },
 ];
 

@@ -1,0 +1,55 @@
+diff --git a/apps/wordcraft-web/src/web.rs b/apps/wordcraft-web/src/web.rs
+index f6ccc77..716bb7f 100644
+--- a/apps/wordcraft-web/src/web.rs
++++ b/apps/wordcraft-web/src/web.rs
+@@ -349,8 +349,13 @@ fn trigger_save_file_picker(
+                     log::debug!("save picker cancelled");
+                     Some(None)
+                 } else {
+-                    log::error!("showSaveFilePicker error: {e:?}");
+-                    Some(Some(format!("{e:?}")))
++                    // A supported API can still reject in an iframe or under browser policy.
++                    // Keep Save usable through an ordinary download; cancellation stays a no-op.
++                    log::warn!("showSaveFilePicker unavailable: {e:?}; falling back to download");
++                    match web_sys::window().ok_or_else(|| "no window".to_string()).and_then(|w| trigger_anchor_download(&w, &name, &bytes_vec)) {
++                        Ok(()) => None,
++                        Err(error) => Some(Some(error)),
++                    }
+                 }
+             }
+         };
+diff --git a/crates/fonts/build.rs b/crates/fonts/build.rs
+index 6169b23..1803cc7 100644
+--- a/crates/fonts/build.rs
++++ b/crates/fonts/build.rs
+@@ -1,8 +1,8 @@
+ //! Optional craft-fonts build input (https://github.com/storytold/craft-fonts, recipe from its
+ //! `docs/integration.md`). With `CRAFT_FONTS_DIR=<checkout>` the fonts in its
+ //! `fonts/manifest.txt` are embedded as `CRAFT_FONTS`; unset, `CRAFT_FONTS` is empty. Web
+-//! (wasm32) builds embed only the UI face, BIZ UDPGothic Regular, to stay within the web size
+-//! budget. With `CRAFT_FONTS_REQUIRED` (releases), a native build also fails when the checkout
++//! (wasm32) builds embed Noto Sans CJK SC, Arabic and Thai Regular for multilingual text.
++//! With `CRAFT_FONTS_REQUIRED` (releases), a native build also fails when the checkout
+ //! has no font for a CJK interface language (Japanese, Simplified Chinese), as an outdated pin
+ //! once did (#241). It only reads the local checkout: no network.
+ use std::fmt::Write as _;
+@@ -19,8 +19,8 @@ fn main() {
+                 // Each CJK interface language needs its own face: without the Chinese one, Chinese
+                 // menus fall back to the Japanese face and show boxes for simplified hanzi (#241).
+                 let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").is_ok_and(|a| a == "wasm32");
+-                if std::env::var_os("CRAFT_FONTS_REQUIRED").is_some() && !wasm {
+-                    for s in REQUIRED_SCRIPTS.iter().filter(|s| !covered.iter().any(|c| c == *s)) {
++                if std::env::var_os("CRAFT_FONTS_REQUIRED").is_some() {
++                    for s in REQUIRED_SCRIPTS.iter().filter(|s| (!wasm || **s == "Hans") && !covered.iter().any(|c| c == *s)) {
+                         println!("cargo::error=CRAFT_FONTS_DIR={}: no {s} font in fonts/manifest.txt (craft-fonts too old?)", dir.display());
+                     }
+                 }
+@@ -55,7 +55,7 @@ fn craft_fonts(dir: &std::path::Path) -> Result<(String, Vec<String>), String> {
+         let [family, style, file, scripts, ..] = f.as_slice() else {
+             return Err(format!("malformed manifest line: {line}"));
+         };
+-        if wasm && !(*family == "BIZ UDPGothic" && *style == "Regular") {
++        if wasm && !(*style == "Regular" && matches!(*family, "Noto Sans CJK SC" | "Noto Sans Arabic" | "Noto Sans Thai")) {
+             continue;
+         }
+         let path = dir.join(file).canonicalize().map_err(|e| format!("{file}: {e}"))?;

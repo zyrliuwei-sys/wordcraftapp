@@ -4,8 +4,11 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-sans: 'DM Sans Variable', 'PingFang SC', sans-serif;
-  --font-serif-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-sans: 'Geist Variable', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-serif-display:
+    'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-mono-code:
+    'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @theme inline {
@@ -41,6 +44,13 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-ink: var(--ink);
+  --color-sheet: var(--sheet);
+  --color-wash: var(--wash);
+  --color-redline: var(--redline);
+  --color-redline-wash: var(--redline-wash);
+  --font-mono: var(--font-mono-code);
+  --font-display: var(--font-serif);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -57,41 +67,95 @@
 }
 
 @layer base {
-  :root,
+  /* WordCraftApp brand: "the reviewed page".
+     Cool paper white, ink navy text, one accent: Redline, the colour of a
+     tracked change. Sharp 2px corners everywhere, hairline rules, tinted
+     ink shadows. Display: Newsreader. Body: Geist. Code: Geist Mono. */
+  :root {
+    --background: oklch(0.984 0.004 250);
+    --foreground: oklch(0.23 0.03 262);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.23 0.03 262);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.23 0.03 262);
+    --primary: oklch(0.23 0.03 262);
+    --primary-foreground: oklch(0.984 0.004 250);
+    --secondary: oklch(0.955 0.006 255);
+    --secondary-foreground: oklch(0.23 0.03 262);
+    --muted: oklch(0.955 0.006 255);
+    --muted-foreground: oklch(0.47 0.02 260);
+    --accent: oklch(0.95 0.008 255);
+    --accent-foreground: oklch(0.23 0.03 262);
+    --destructive: oklch(0.56 0.19 27);
+    --destructive-foreground: oklch(0.99 0 0);
+    --border: oklch(0.895 0.008 255);
+    --input: oklch(0.85 0.01 255);
+    --ring: oklch(0.56 0.19 27);
+    --chart-1: oklch(0.56 0.19 27);
+    --chart-2: oklch(0.23 0.03 262);
+    --chart-3: oklch(0.55 0.04 260);
+    --chart-4: oklch(0.75 0.03 255);
+    --chart-5: oklch(0.7 0.12 40);
+    --radius: 0.125rem;
+    --sidebar: oklch(0.97 0.005 252);
+    --sidebar-foreground: oklch(0.23 0.03 262);
+    --sidebar-primary: oklch(0.23 0.03 262);
+    --sidebar-primary-foreground: oklch(0.984 0.004 250);
+    --sidebar-accent: oklch(0.95 0.008 255);
+    --sidebar-accent-foreground: oklch(0.23 0.03 262);
+    --sidebar-border: oklch(0.895 0.008 255);
+    --sidebar-ring: oklch(0.56 0.19 27);
+
+    --ink: oklch(0.23 0.03 262);
+    --sheet: oklch(1 0 0);
+    --wash: oklch(0.963 0.006 255);
+    --redline: oklch(0.55 0.19 27);
+    --redline-wash: oklch(0.955 0.025 25);
+    --shadow-sheet:
+      0 1px 0 oklch(0.23 0.03 262 / 0.05),
+      0 28px 60px -28px oklch(0.23 0.03 262 / 0.35);
+  }
   .dark {
-    --background: oklch(0.15 0.009 42);
-    --foreground: oklch(0.94 0.013 78);
-    --card: oklch(0.2 0.012 44);
-    --card-foreground: oklch(0.94 0.013 78);
-    --popover: oklch(0.2 0.012 44);
-    --popover-foreground: oklch(0.94 0.013 78);
-    --primary: oklch(0.73 0.09 57);
-    --primary-foreground: oklch(0.15 0.009 42);
-    --secondary: oklch(0.25 0.013 43);
-    --secondary-foreground: oklch(0.94 0.013 78);
-    --muted: oklch(0.25 0.013 43);
-    --muted-foreground: oklch(0.71 0.021 67);
-    --accent: oklch(0.3 0.02 44);
-    --accent-foreground: oklch(0.96 0.012 78);
-    --destructive: oklch(0.62 0.19 25);
-    --destructive-foreground: oklch(0.98 0 0);
-    --border: oklch(0.34 0.019 44);
-    --input: oklch(0.34 0.019 44);
-    --ring: oklch(0.73 0.09 57);
-    --chart-1: oklch(0.73 0.09 57);
-    --chart-2: oklch(0.61 0.08 38);
-    --chart-3: oklch(0.78 0.03 79);
-    --chart-4: oklch(0.55 0.035 170);
-    --chart-5: oklch(0.63 0.055 26);
-    --radius: 0.25rem;
-    --sidebar: oklch(0.17 0.01 42);
-    --sidebar-foreground: oklch(0.94 0.013 78);
-    --sidebar-primary: oklch(0.73 0.09 57);
-    --sidebar-primary-foreground: oklch(0.15 0.009 42);
-    --sidebar-accent: oklch(0.27 0.016 44);
-    --sidebar-accent-foreground: oklch(0.94 0.013 78);
-    --sidebar-border: oklch(0.34 0.019 44);
-    --sidebar-ring: oklch(0.73 0.09 57);
+    --background: oklch(0.175 0.02 262);
+    --foreground: oklch(0.94 0.008 255);
+    --card: oklch(0.215 0.022 262);
+    --card-foreground: oklch(0.94 0.008 255);
+    --popover: oklch(0.215 0.022 262);
+    --popover-foreground: oklch(0.94 0.008 255);
+    --primary: oklch(0.94 0.008 255);
+    --primary-foreground: oklch(0.2 0.025 262);
+    --secondary: oklch(0.25 0.022 262);
+    --secondary-foreground: oklch(0.94 0.008 255);
+    --muted: oklch(0.25 0.022 262);
+    --muted-foreground: oklch(0.72 0.018 258);
+    --accent: oklch(0.27 0.024 262);
+    --accent-foreground: oklch(0.94 0.008 255);
+    --destructive: oklch(0.7 0.16 27);
+    --destructive-foreground: oklch(0.18 0.02 262);
+    --border: oklch(0.3 0.022 262);
+    --input: oklch(0.36 0.022 262);
+    --ring: oklch(0.7 0.16 27);
+    --chart-1: oklch(0.7 0.16 27);
+    --chart-2: oklch(0.94 0.008 255);
+    --chart-3: oklch(0.65 0.03 258);
+    --chart-4: oklch(0.45 0.03 260);
+    --chart-5: oklch(0.75 0.11 45);
+    --sidebar: oklch(0.195 0.021 262);
+    --sidebar-foreground: oklch(0.94 0.008 255);
+    --sidebar-primary: oklch(0.94 0.008 255);
+    --sidebar-primary-foreground: oklch(0.2 0.025 262);
+    --sidebar-accent: oklch(0.27 0.024 262);
+    --sidebar-accent-foreground: oklch(0.94 0.008 255);
+    --sidebar-border: oklch(0.3 0.022 262);
+    --sidebar-ring: oklch(0.7 0.16 27);
+
+    --ink: oklch(0.94 0.008 255);
+    --sheet: oklch(0.215 0.022 262);
+    --wash: oklch(0.2 0.021 262);
+    --redline: oklch(0.71 0.15 27);
+    --redline-wash: oklch(0.26 0.04 25);
+    --shadow-sheet:
+      0 1px 0 oklch(1 0 0 / 0.04), 0 28px 60px -28px oklch(0 0 0 / 0.6);
   }
 }
 
@@ -165,6 +229,255 @@
     .animate-drift-b,
     .animate-drift-c {
       animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  .wc-container {
+    width: min(1200px, 100% - 32px);
+    margin-inline: auto;
+  }
+  @media (min-width: 640px) {
+    .wc-container {
+      width: min(1200px, 100% - 64px);
+    }
+  }
+  .font-display {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .wc-display {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Buttons: sharp, ink-first. One primary, one secondary. */
+  .wc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s,
+      transform 0.1s;
+  }
+  .wc-btn:active {
+    transform: translateY(1px);
+  }
+  .wc-btn:focus-visible {
+    outline: 2px solid var(--redline);
+    outline-offset: 2px;
+  }
+  .wc-btn-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .wc-btn-primary:hover {
+    background: var(--redline);
+    color: #fff;
+  }
+  .wc-btn-secondary {
+    border-color: var(--input);
+    background: var(--sheet);
+    color: var(--foreground);
+  }
+  .wc-btn-secondary:hover {
+    border-color: var(--foreground);
+  }
+  .wc-link {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-color: var(--redline);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color 0.15s;
+  }
+  .wc-link:hover {
+    color: var(--redline);
+  }
+
+  /* Signature: tracked-change markup. */
+  .redline-del {
+    color: var(--muted-foreground);
+    text-decoration: line-through;
+    text-decoration-color: var(--redline);
+    text-decoration-thickness: 0.06em;
+  }
+  .redline-ins {
+    color: var(--redline);
+    text-decoration: underline;
+    text-decoration-color: var(--redline);
+    text-decoration-thickness: 0.05em;
+    text-underline-offset: 0.12em;
+  }
+  .sheet {
+    background: var(--sheet);
+    box-shadow: var(--shadow-sheet);
+  }
+
+  .wc-prose h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    font-size: 2rem;
+    line-height: 1.15;
+    margin: 3rem 0 0.9rem;
+    color: var(--foreground);
+  }
+  .wc-prose h3 {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--foreground);
+  }
+  .wc-prose p,
+  .wc-prose li {
+    color: var(--muted-foreground);
+    line-height: 1.75;
+    font-size: 15.5px;
+  }
+  .wc-prose p + p {
+    margin-top: 0.8rem;
+  }
+  .wc-prose ol,
+  .wc-prose ul {
+    margin: 0.75rem 0;
+    padding-left: 1.25rem;
+  }
+  .wc-prose ol {
+    list-style: decimal;
+  }
+  .wc-prose ul {
+    list-style: square;
+  }
+  .wc-prose li::marker {
+    color: var(--redline);
+  }
+  .wc-prose li + li {
+    margin-top: 0.4rem;
+  }
+  .wc-prose strong {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+  .wc-prose code,
+  .wc-kbd {
+    font-family: var(--font-mono-code);
+    font-size: 0.85em;
+    background: var(--wash);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    padding: 0.08em 0.4em;
+    border-radius: 2px;
+  }
+  .wc-dropcap::first-letter {
+    float: left;
+    font-family: var(--font-serif);
+    font-size: 4.4em;
+    line-height: 0.82;
+    padding: 0.06em 0.12em 0 0;
+    color: var(--redline);
+  }
+  .wc-scroll-x {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .wc-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  .wc-reveal[data-shown='true'] {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wc-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+/* Hero signature: the headline is a tracked change being made. */
+@layer components {
+  .redline-anim-del {
+    position: relative;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+  .redline-anim-del::after {
+    content: '';
+    position: absolute;
+    left: -0.04em;
+    right: -0.04em;
+    top: 54%;
+    height: 0.065em;
+    background: var(--redline);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: wc-strike 0.55s cubic-bezier(0.6, 0, 0.2, 1) 0.35s forwards;
+  }
+  .redline-anim-ins {
+    display: inline-block;
+    color: var(--redline);
+    border-bottom: 0.055em solid var(--redline);
+    line-height: 1.02;
+    clip-path: inset(0 100% 0 0);
+    animation: wc-type 0.7s steps(9, end) 0.95s forwards;
+  }
+  .redline-anim-comment {
+    opacity: 0;
+    transform: translateX(8px);
+    animation: wc-fade-in 0.5s ease 1.6s forwards;
+  }
+  @keyframes wc-strike {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes wc-type {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes wc-fade-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .redline-anim-del::after {
+      animation: none;
+      transform: scaleX(1);
+    }
+    .redline-anim-ins {
+      animation: none;
+      clip-path: none;
+    }
+    .redline-anim-comment {
+      animation: none;
+      opacity: 1;
+      transform: none;
     }
   }
 }

@@ -4,28 +4,19 @@ export const paraglideConfig = {
   outdir: './src/paraglide',
   outputStructure: 'message-modules',
   cookieName: 'PARAGLIDE_LOCALE',
-  strategy: ['url', 'cookie', 'baseLocale'],
+  strategy: ['baseLocale'],
   urlPatterns: [
     {
       pattern: '/api/:path(.*)?',
-      localized: [
-        ['en', '/api/:path(.*)?'],
-        ['zh', '/api/:path(.*)?'],
-      ],
+      localized: [['en', '/api/:path(.*)?']],
     },
     {
       pattern: '/',
-      localized: [
-        ['zh', '/zh'],
-        ['en', '/'],
-      ],
+      localized: [['en', '/']],
     },
     {
       pattern: '/:path(.*)?',
-      localized: [
-        ['zh', '/zh/:path(.*)?'],
-        ['en', '/:path(.*)?'],
-      ],
+      localized: [['en', '/:path(.*)?']],
     },
   ],
 };

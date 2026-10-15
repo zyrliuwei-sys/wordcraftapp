@@ -31,7 +31,7 @@ function ensureCloudflareEnv(): Promise<void> {
 // that points at the previous build's assets. Query strings (utm_*, …) and
 // other paths always render fresh; admin settings show up within 5 minutes.
 declare const __BUILD_ID__: string;
-const HTML_CACHE_PATHS = new Set(['/', '/zh', '/zh/']);
+const HTML_CACHE_PATHS = new Set(['/']);
 const HTML_CACHE_SECONDS = 300;
 
 function htmlEdgeCache(req: Request): Cache | undefined {
@@ -71,6 +71,14 @@ async function renderWithEdgeCache(req: Request): Promise<Response> {
 // getLocale() resolves per-request (AsyncLocalStorage) during SSR.
 export default {
   async fetch(req: Request): Promise<Response> {
+    const url = new URL(req.url);
+    if (
+      (req.method === 'GET' || req.method === 'HEAD') &&
+      (url.pathname === '/zh' || url.pathname.startsWith('/zh/'))
+    ) {
+      url.pathname = url.pathname.slice(3) || '/';
+      return Response.redirect(url.href, 308);
+    }
     await ensureCloudflareEnv();
     const response = await renderWithEdgeCache(req);
     response.headers.set('X-Content-Type-Options', 'nosniff');
