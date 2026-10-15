@@ -1,7 +1,7 @@
 import { ArrowRight, MousePointerClick } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
-import { SCREENSHOTS, shotSrcSet, WORDCRAFT_WEB_APP } from '@/config/wordcraft';
+import { SCREENSHOTS, shotSrcSet } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
 import { Reveal } from '@/components/reveal';
 
@@ -17,7 +17,7 @@ export function OnlineSection() {
             {m['wc.onh.p']()}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <a href={WORDCRAFT_WEB_APP} className="wc-btn wc-btn-primary">
+            <a href="#wordcraft-editor" className="wc-btn wc-btn-primary">
               <MousePointerClick className="size-4" />
               {m['wc.cta.online']()}
             </a>

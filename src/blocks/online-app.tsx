@@ -4,7 +4,6 @@ import {
   Download,
   Maximize2,
   MonitorSmartphone,
-  Play,
   ShieldCheck,
 } from 'lucide-react';
 
@@ -15,6 +14,7 @@ import {
   WORDCRAFT_WEB_APP,
 } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
+import { BrowserEditor } from '@/components/browser-editor';
 import { PageHero } from '@/components/page-hero';
 
 export function OnlineApp() {
@@ -43,37 +43,20 @@ export function OnlineApp() {
         <h2 className="font-display text-foreground mb-6 text-[30px] sm:text-[36px]">
           {m['wc.on.preview_title']()}
         </h2>
-        <div className="sheet border-border relative aspect-[16/10] min-h-[520px] w-full overflow-hidden border bg-[#e6e6e6]">
-          {loaded ? (
-            <iframe
-              src={WORDCRAFT_WEB_APP}
-              title="WordCraft"
-              allow="fullscreen; clipboard-read; clipboard-write"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
-            />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setLoaded(true)}
-              className="group absolute inset-0 block h-full w-full"
-            >
-              <img
-                src={`${SCREENSHOTS.backstage}-1600.webp`}
-                alt=""
-                width={1600}
-                height={1000}
-                className="absolute inset-0 h-full w-full object-cover opacity-60 transition-opacity group-hover:opacity-45"
-              />
-              <span className="absolute inset-0 grid place-items-center">
-                <span className="wc-btn wc-btn-primary min-h-12 px-6 text-[15px] shadow-lg">
-                  <Play className="size-4" />
-                  {m['wc.on.preview_load']()}
-                </span>
-              </span>
-            </button>
-          )}
-        </div>
+        <BrowserEditor
+          id="online-editor"
+          src={WORDCRAFT_WEB_APP}
+          title={m['wc.on.title']()}
+          active={loaded}
+          onActivate={() => setLoaded(true)}
+          loadLabel={m['wc.on.preview_load']()}
+          poster={{
+            src: `${SCREENSHOTS.backstage}-1600.webp`,
+            alt: m['wc.on.poster_alt'](),
+            width: 1600,
+            height: 1000,
+          }}
+        />
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
           <a
             href={WORDCRAFT_WEB_APP}

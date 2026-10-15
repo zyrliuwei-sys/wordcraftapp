@@ -1,4 +1,3 @@
-import { WORDCRAFT_WEB_APP } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
 import { SiteHeader } from '@/components/site-header';
 
@@ -15,7 +14,7 @@ export function Header() {
     <SiteHeader
       navLinks={navLinks}
       logoAlt={m['wc.logo_alt']()}
-      cta={{ href: WORDCRAFT_WEB_APP, label: m['wc.cta.online']() }}
+      cta={{ href: '/#wordcraft-editor', label: m['wc.cta.online']() }}
     />
   );
 }

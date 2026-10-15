@@ -1,7 +1,6 @@
 import { Download, MousePointerClick } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
-import { WORDCRAFT_WEB_APP } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
 import { Reveal } from '@/components/reveal';
 
@@ -22,14 +21,14 @@ export function FinalCta() {
             {m['wc.final.sub']()}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link href="/download" className="wc-btn wc-btn-primary">
-              <Download className="size-4" />
-              {m['wc.cta.download']()}
-            </Link>
-            <a href={WORDCRAFT_WEB_APP} className="wc-btn wc-btn-secondary">
+            <a href="#wordcraft-editor" className="wc-btn wc-btn-primary">
               <MousePointerClick className="size-4" />
               {m['wc.cta.online']()}
             </a>
+            <Link href="/download" className="wc-btn wc-btn-secondary">
+              <Download className="size-4" />
+              {m['wc.cta.download']()}
+            </Link>
           </div>
         </div>
       </Reveal>
