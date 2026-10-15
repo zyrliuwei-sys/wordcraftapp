@@ -15,6 +15,9 @@ It sets the production URL before Vite compiles the application. Pushing to
 `main` starts a new build and production deployment; local edits take effect
 after they have been committed and pushed.
 
+Builds watch all repository paths (`*`), so changes to pages, translations,
+assets, configuration, and reviewed migrations all trigger deployment.
+
 `AUTH_SECRET` and `CONFIG_ENCRYPTION_KEY` are Worker secrets and must be kept
 stable. Provider credentials can be managed at `/admin/settings`.
 
