@@ -10,6 +10,10 @@ Cloudflare Workers Builds connects `zyrliuwei-sys/wordcraftapp`, production bran
 - Build: `pnpm run cf:ci:build`
 - Deploy: `pnpm exec wrangler d1 migrations apply wordcraftapp --remote --config wrangler.jsonc && pnpm exec wrangler deploy`
 
+Set the Cloudflare build variable `PNPM_VERSION=11.15.1`, matching the
+`packageManager` pin. The default pnpm 10.11.1 does not read this repository's
+workspace overrides correctly and fails frozen-lockfile installation.
+
 The build recreates the ignored `wrangler.jsonc` and `.env.production` files.
 It sets the production URL before Vite compiles the application. Pushing to
 `main` starts a new build and production deployment; local edits take effect
