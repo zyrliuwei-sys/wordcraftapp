@@ -96,10 +96,18 @@ export function SiteHeader({
               image={user.image}
             />
           ) : cta ? (
-            <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
-              {cta.label}
-              <ArrowRight className="size-4" />
-            </a>
+            <>
+              <Link
+                href="/sign-in"
+                className={buttonVariants({ variant: 'ghost' })}
+              >
+                {m['common.sign.sign_in_title']()}
+              </Link>
+              <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
+                {cta.label}
+                <ArrowRight className="size-4" />
+              </a>
+            </>
           ) : (
             <Link href="/settings" className={cn(buttonVariants(), 'gap-1.5')}>
               {m['common.nav.get_started']()}
@@ -158,9 +166,18 @@ export function SiteHeader({
                 image={user.image}
               />
             ) : cta ? (
-              <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
-                {cta.label}
-              </a>
+              <>
+                <Link
+                  href="/sign-in"
+                  className={buttonVariants({ variant: 'ghost' })}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {m['common.sign.sign_in_title']()}
+                </Link>
+                <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
+                  {cta.label}
+                </a>
+              </>
             ) : (
               <Link
                 href="/settings"
