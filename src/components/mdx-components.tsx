@@ -1,6 +1,7 @@
 import type { AnchorHTMLAttributes, HTMLAttributes } from 'react';
 import type { MDXComponents } from 'mdx/types';
 
+import { Link } from '@/core/i18n/navigation';
 import { cn } from '@/lib/utils';
 
 export const mdxComponents: MDXComponents = {
@@ -37,15 +38,22 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
-  a: ({ className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a
-      className={cn(
-        'text-primary font-medium underline-offset-4 hover:underline',
-        className
-      )}
-      {...props}
-    />
-  ),
+  a: ({
+    className,
+    href = '',
+    ...props
+  }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    const linkClass = cn(
+      'text-primary font-medium underline underline-offset-4 hover:no-underline',
+      className
+    );
+    // Static hosted-editor resources bypass the localized application router.
+    return href.startsWith('/app/') ? (
+      <a href={href} className={linkClass} {...props} />
+    ) : (
+      <Link href={href} className={linkClass} {...props} />
+    );
+  },
   ul: ({ className, ...props }: HTMLAttributes<HTMLUListElement>) => (
     <ul
       className={cn(

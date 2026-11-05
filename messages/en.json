@@ -1361,5 +1361,13 @@
   "wc.home.editor_start": "Try WordCraft here",
   "wc.home.editor_return": "Return to editor",
   "wc.home.editor_hint": "Click to load the editor on this page. Best on a desktop or laptop. Open a local file or start a blank document, then use File → Save to keep a copy on your device.",
-  "wc.on.poster_alt": "WordCraft File menu with blank document and template options"
+  "wc.on.poster_alt": "WordCraft File menu with blank document and template options",
+  "wc.guides.kicker": "The WordCraft field guide",
+  "wc.guides.title": "A little guidance. Better documents.",
+  "wc.guides.description": "Four in-depth guides, from your first document to a reliable browser workflow. Practical examples, real screenshots, and checks you can follow.",
+  "wc.guides.nav": "In-depth guides",
+  "wc.guides.reading_time": "{minutes} min read",
+  "wc.guides.read": "Read the guide",
+  "wc.guides.related": "Keep learning",
+  "wc.guides.next_description": "Find the editor, desktop downloads and the full collection of WordCraft resources on our homepage, or put this guide into practice online."
 }

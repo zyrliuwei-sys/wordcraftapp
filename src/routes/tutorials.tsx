@@ -4,6 +4,7 @@ import { pageHead } from '@/lib/page-head';
 import { m } from '@/paraglide/messages.js';
 import { getLocale } from '@/paraglide/runtime.js';
 import { Footer } from '@/blocks/footer';
+import { Guides } from '@/blocks/guides';
 import { Header } from '@/blocks/header';
 import { Tutorial } from '@/blocks/tutorial';
 
@@ -34,6 +35,7 @@ function TutorialsPage() {
       <Header />
       <main className="flex-1">
         <Tutorial />
+        <Guides />
       </main>
       <Footer />
     </div>

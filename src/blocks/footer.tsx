@@ -5,8 +5,10 @@ import {
   WORDCRAFT_REPO,
 } from '@/config/wordcraft';
 import { m } from '@/paraglide/messages.js';
+import { getLocale } from '@/paraglide/runtime.js';
 import { FooterBadgeList } from '@/components/footer-badge-list';
 import { SiteFooter, type FooterColumn } from '@/components/site-footer';
+import { getGuides } from '@/content/guides';
 
 export function Footer() {
   const supportEmail = m['wc.footer.support_email']();
@@ -22,6 +24,13 @@ export function Footer() {
           href: '/wordcraft-vs-microsoft-word',
         },
       ],
+    },
+    {
+      title: m['wc.guides.nav'](),
+      links: getGuides(getLocale()).map((guide) => ({
+        label: guide.title,
+        href: `/${guide.slug}`,
+      })),
     },
     {
       title: m['wc.footer.official'](),

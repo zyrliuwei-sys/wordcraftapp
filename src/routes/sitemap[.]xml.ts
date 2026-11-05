@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
 import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
+import { GUIDE_SLUGS } from '@/content/guides';
 
 const STATIC_PATHS = [
   '',
@@ -11,6 +12,7 @@ const STATIC_PATHS = [
   '/wordcraft-vs-microsoft-word',
   '/privacy-policy',
   '/terms-of-service',
+  ...GUIDE_SLUGS.map((slug) => `/${slug}`),
 ];
 
 type Entry = {

@@ -1361,5 +1361,13 @@
   "wc.home.editor_start": "在这里试用 WordCraft",
   "wc.home.editor_return": "返回编辑器",
   "wc.home.editor_hint": "点击后在本页加载编辑器，建议使用台式机或笔记本。打开本地文件或新建空白文档，再通过“文件 → 保存”将副本保存在设备上。",
-  "wc.on.poster_alt": "WordCraft 文件菜单，显示空白文档与模板选项"
+  "wc.on.poster_alt": "WordCraft 文件菜单，显示空白文档与模板选项",
+  "wc.guides.kicker": "WordCraft 实用指南",
+  "wc.guides.title": "从入门到交付，写好每一份文档。",
+  "wc.guides.description": "四篇长篇指南，涵盖初次使用、文档兼容、在线编辑和浏览器排障。配合真实截图、练习示例与检查步骤，边读边做。",
+  "wc.guides.nav": "深入指南",
+  "wc.guides.reading_time": "阅读约 {minutes} 分钟",
+  "wc.guides.read": "阅读指南",
+  "wc.guides.related": "继续阅读",
+  "wc.guides.next_description": "回到首页查看编辑器、桌面版下载与完整教程入口，或打开在线编辑器，把这篇指南里的步骤实际练习一遍。"
 }

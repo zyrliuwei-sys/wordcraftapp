@@ -10,6 +10,7 @@ import { Facts } from '@/blocks/facts';
 import { FAQ, faqItems } from '@/blocks/faq';
 import { FinalCta } from '@/blocks/final-cta';
 import { Footer } from '@/blocks/footer';
+import { Guides } from '@/blocks/guides';
 import { Header } from '@/blocks/header';
 import { Hero } from '@/blocks/hero';
 import { OnlineSection } from '@/blocks/online-section';
@@ -102,6 +103,7 @@ function HomePage() {
         <Why />
         <ComparePreview />
         <StartSteps />
+        <Guides />
         <FAQ />
         <FinalCta />
       </main>

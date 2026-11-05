@@ -56,7 +56,7 @@ export function SiteFooter({
             )}
           >
             {columns.map((col) => (
-              <div key={col.title} className="space-y-5">
+              <div key={col.title} className="min-w-0 space-y-5">
                 <p className="text-foreground text-[13px] font-semibold tracking-wide">
                   {col.title}
                 </p>
@@ -72,7 +72,7 @@ export function SiteFooter({
                               : '_blank'
                           }
                           rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                          className="text-muted-foreground hover:text-foreground text-sm break-words transition-colors"
                         >
                           {link.label}
                         </a>
@@ -80,7 +80,7 @@ export function SiteFooter({
                         <Link
                           href={link.href}
                           target={link.external ? '_blank' : undefined}
-                          className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                          className="text-muted-foreground hover:text-foreground text-sm break-words transition-colors"
                         >
                           {link.label}
                         </Link>
