@@ -1,0 +1,36 @@
+export const meta = {
+  title: 'WordCraft DOCX Troubleshooting: Garbled Text and Blank Pages',
+  description:
+    'Work through file integrity, font coverage, hidden layout and section breaks before repairing a DOCX copy.',
+  created_at: '2026-11-13',
+};
+
+A blank page and unreadable text can have very different causes. The file may be incomplete, the browser may still be starting, a required font may be missing, or a section break may deliberately create an empty page. Investigate in a fixed order and keep the original file unchanged. Repeatedly saving over the only copy makes it harder to identify what went wrong.
+
+## First separate a loading problem from a document problem
+
+Create a blank document in the same WordCraft session and type a short sentence. If that does not work, troubleshoot the application or browser first. Use the [browser troubleshooting guide](/wordcraft-web-version-guide) for a stuck loader or an empty canvas. Those symptoms do not yet tell you whether the DOCX is damaged.
+
+If a blank document works, open a second known-good DOCX. When only one file fails, focus on that file. When every imported file fails, record the application version and environment before changing individual documents. On the web, allow the application to finish loading and try opening the file from its normal Open control.
+
+## Verify the file before changing its contents
+
+Check that the downloaded file has a plausible nonzero size and that its transfer completed. Obtain a fresh copy from the sender if the original was interrupted. Renaming an HTML page or an old binary document to `.docx` does not convert it into a valid DOCX package.
+
+Ask whether the source file opens normally in the application that created it. If it does, request a newly saved DOCX and a PDF reference. Avoid immediately converting through several applications: each conversion adds another variable. If the source application also cannot open it, seek an intact backup rather than blaming WordCraft's renderer.
+
+For a report, note whether the failure occurs on opening, after scrolling to a particular page, or after saving and reopening. Use the [official issue tracker](https://github.com/storytold/wordcraft/issues) when the evidence points to an upstream import problem, and share a minimal nonconfidential example where possible.
+
+## Distinguish missing glyphs from damaged text
+
+Boxes, empty symbols and isolated missing characters often indicate font coverage. Select a short affected passage and try a font known to cover that language. In the browser, importing a licensed font through Add Font may be necessary. Follow the [font substitution investigation](/blog/wordcraft-font-substitution-layout) before replacing text globally.
+
+If copying a short passage into a plain-text editor produces readable words, that is a useful clue that the text exists and the rendering needs investigation. If it remains nonsensical, compare it with the source document and ask about the original format. Treat this as a diagnostic clue, not a definitive corruption test. Do not “repair” unreadable text with a broad find-and-replace operation unless you understand the pattern.
+
+## Inspect blank pages as layout, not empty space
+
+Enable formatting marks and examine the end of the preceding page. Look for empty paragraphs, manual page breaks and section breaks. Check whether an odd-page or even-page section start intentionally inserts a blank page. Also inspect paragraph settings such as page break before and keep with next.
+
+A large table row, an anchored image or a long unbreakable paragraph can push following content forward. Reduce or reposition one suspected item in a copy and see whether the blank page changes. Never remove all section breaks indiscriminately; they can carry page orientation, header and numbering decisions.
+
+Save the repaired copy under a new name, reopen it and compare it with the reference PDF. Check later pages, not only the original problem area. For section-specific repairs, continue with [headers, footers and page numbering](/blog/wordcraft-headers-footers-page-numbers).

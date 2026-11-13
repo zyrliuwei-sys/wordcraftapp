@@ -1,14 +1,9 @@
-'use client';
-
 import { useState } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
-import { useSession } from '@/core/auth/client';
 import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { cn } from '@/lib/utils';
-import { m } from '@/paraglide/messages.js';
-import { SiteUserMenu } from '@/components/site-user-menu';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
 
@@ -36,12 +31,10 @@ export function SiteHeader({
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
-  /** Replaces the default "Get started" button for signed-out visitors. */
+  /** Public editor action; account navigation belongs in authenticated layouts. */
   cta?: HeaderCta;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: session } = useSession();
-  const user = session?.user;
 
   return (
     <header className="bg-background/95 border-border sticky top-0 z-50 w-full border-b backdrop-blur-sm">
@@ -61,7 +54,10 @@ export function SiteHeader({
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav
+          className="hidden items-center gap-4 xl:flex"
+          aria-label="Main navigation"
+        >
           {navLinks?.map((link) =>
             isExternalHref(link.href) || isStaticFileHref(link.href) ? (
               <a
@@ -87,38 +83,19 @@ export function SiteHeader({
         </nav>
 
         {/* Desktop actions */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <ThemeToggle />
-          {user ? (
-            <SiteUserMenu
-              name={user.name || 'User'}
-              email={user.email}
-              image={user.image}
-            />
-          ) : cta ? (
-            <>
-              <Link
-                href="/sign-in"
-                className={buttonVariants({ variant: 'ghost' })}
-              >
-                {m['common.sign.sign_in_title']()}
-              </Link>
-              <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
-                {cta.label}
-                <ArrowRight className="size-4" />
-              </a>
-            </>
-          ) : (
-            <Link href="/settings" className={cn(buttonVariants(), 'gap-1.5')}>
-              {m['common.nav.get_started']()}
+          {cta && (
+            <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
+              {cta.label}
               <ArrowRight className="size-4" />
-            </Link>
+            </a>
           )}
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="p-2 md:hidden"
+          className="p-2 xl:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -129,8 +106,8 @@ export function SiteHeader({
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-border border-t px-4 pt-2 pb-4 md:hidden">
-          <nav className="flex flex-col gap-2">
+        <div className="border-border max-h-[calc(100dvh-4rem)] overflow-y-auto border-t px-4 pt-2 pb-4 xl:hidden">
+          <nav className="flex flex-col gap-2" aria-label="Main navigation">
             {navLinks?.map((link) =>
               isExternalHref(link.href) || isStaticFileHref(link.href) ? (
                 <a
@@ -159,33 +136,14 @@ export function SiteHeader({
           <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
             <ThemeToggle />
             <div className="flex-1" />
-            {user ? (
-              <SiteUserMenu
-                name={user.name || 'User'}
-                email={user.email}
-                image={user.image}
-              />
-            ) : cta ? (
-              <>
-                <Link
-                  href="/sign-in"
-                  className={buttonVariants({ variant: 'ghost' })}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {m['common.sign.sign_in_title']()}
-                </Link>
-                <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
-                  {cta.label}
-                </a>
-              </>
-            ) : (
-              <Link
-                href="/settings"
+            {cta && (
+              <a
+                href={cta.href}
                 className={cn(buttonVariants(), 'gap-1.5')}
                 onClick={() => setMobileOpen(false)}
               >
-                {m['common.nav.get_started']()}
-              </Link>
+                {cta.label}
+              </a>
             )}
           </div>
         </div>

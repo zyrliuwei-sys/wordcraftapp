@@ -99,6 +99,15 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
+  pre: ({ className, ...props }: HTMLAttributes<HTMLPreElement>) => (
+    <pre
+      className={cn(
+        'bg-muted my-5 max-w-full overflow-x-auto rounded-md p-4 text-sm [&_code]:bg-transparent [&_code]:p-0',
+        className
+      )}
+      {...props}
+    />
+  ),
   hr: ({ className, ...props }: HTMLAttributes<HTMLHRElement>) => (
     <hr className={cn('border-border my-8', className)} {...props} />
   ),

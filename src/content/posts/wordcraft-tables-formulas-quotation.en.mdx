@@ -1,0 +1,44 @@
+import { GuideScreenshot } from '@/components/guide-screenshot';
+
+export const meta = {
+  title: 'WordCraft Tables and Formulas: Build a Usable Quotation',
+  description:
+    'Create a quotation table, calculate line totals, update fields and verify the saved document before sending it.',
+  created_at: '2026-11-13',
+};
+
+A quotation is a useful first table exercise because its structure and arithmetic are both easy to check. Start with a fictional two-item order rather than a live customer document. This walkthrough uses a simple four-column table and formulas supported by the [v0.18.1 table formula implementation](https://github.com/storytold/wordcraft/blob/v0.18.1/crates/engine/src/cmd/table_formula.rs). The example amounts are practice data, not prices or tax advice.
+
+## Build the quotation before adding formulas
+
+Open a blank document and type a title, quotation reference, date and recipient. Put payment terms and the quotation's validity period in ordinary paragraphs below the future table. Keeping those details outside the calculation area makes the numbers easier to inspect.
+
+1. Use Insert to create a table with four columns and four rows.
+2. Label the first row Description, Quantity, Unit price and Line total.
+3. In row two, enter Notebook, 3 and 12 in the first three cells.
+4. In row three, enter Folder, 2 and 5. Leave both total cells empty.
+5. In the last row, type Subtotal in the first cell and leave the middle cells empty.
+
+Keep the table unmerged while calculating. Make Description the widest column, right-align the numeric columns, and use a modest header fill. State the currency above the table instead of inserting currency text into every input cell. This gives you an uncomplicated numeric baseline before experimenting with local number formatting.
+
+## Insert and check the calculations
+
+Click the final cell in row two. Open the contextual Table Layout tab, find its Data group and choose Formula. Enter `=B2*C2`. The expected result is 36. Repeat in row three with `=B3*C3`; that result should be 10. In the final cell of row four, insert `=SUM(D2:D3)`. Your subtotal should be 46.
+
+These are document fields, not spreadsheet cells with an assumed live recalculation model. After changing inputs, use the available field-update command and inspect the results. Change the Notebook quantity from 3 to 4: the line should become 48 and the subtotal 58. If either stays unchanged, update the line field before updating the subtotal. Do not send a document simply because its formulas look plausible.
+
+A directional formula such as `=SUM(ABOVE)` can be convenient, but blank or text rows can affect which numeric run it reads. An explicit range is easier to audit in this small example. After adding or deleting rows, reopen the formula and confirm its range still covers every intended item.
+
+## Make the document readable and portable
+
+Give the table enough width to prevent descriptions and amounts from colliding. If it runs across pages, use a repeated header row and check that an item description is not separated confusingly from its amount. Avoid using spaces to align values; cell alignment and column widths are more stable.
+
+Save a DOCX copy under a new filename, close it only after confirming the save, and reopen it. Check the inputs, displayed totals and page breaks. Then export a PDF for recipients who only need to read the offer. Reopen that PDF too: arithmetic correctness and layout correctness are separate checks.
+
+For discounts, taxes or many dependent calculations, calculate and verify the amounts in a spreadsheet first, then transfer the checked values to the quotation. A document table is suitable for presentation and simple fields, but it should not become an unreviewed accounting system. Continue with [PDF versus DOCX delivery](/blog/wordcraft-pdf-vs-docx) or the broader [DOCX compatibility assessment](/wordcraft-guide).
+
+<GuideScreenshot
+  base="/imgs/wordcraft/references"
+  alt="WordCraft References ribbon above a document containing a styled table"
+  caption="A structured table keeps labels, figures and surrounding document text distinct. Upstream product screenshot, not a record of this exercise; controls may differ by release. Source: ArtCraft / WordCraft."
+/>

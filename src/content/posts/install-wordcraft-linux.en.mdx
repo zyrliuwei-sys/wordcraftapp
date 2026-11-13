@@ -1,0 +1,47 @@
+export const meta = {
+  title: 'Install WordCraft on Linux: Packages, AppImage and First Launch',
+  description:
+    'Choose the correct Linux architecture and package, verify the official download and complete a small save-and-reopen check.',
+  created_at: '2026-11-13',
+};
+
+Begin with the [WordCraft download page](/download), which links to official v0.18.1 release assets. Choose a package for both your processor architecture and your distribution. An x86_64 build is not interchangeable with an aarch64 build, and a package for one distribution family is not a universal installer. These instructions describe a practical installation path; they are not a claim that this site tested every Linux distribution.
+
+## Identify the machine and verify the download
+
+In a terminal, run `uname -m`. An Intel or AMD 64-bit system usually reports `x86_64`; an ARM64 machine commonly reports `aarch64`. RISC-V has separate release assets and requirements, so consult the [official Linux release documentation](https://github.com/storytold/wordcraft/tree/v0.18.1#linux) before selecting that build.
+
+Download your chosen file and `SHA256SUMS.txt` from the same [v0.18.1 release](https://github.com/storytold/wordcraft/releases/tag/v0.18.1). Run `sha256sum` on the package and compare the full result with the matching filename in the checksum list. A mismatch means you should stop and download again. A matching checksum verifies the downloaded bytes against that published list; it does not independently establish the publisher's identity.
+
+Keep the package in a directory you recognize, such as Downloads. The commands below assume an x86_64 machine and that your terminal is already in that directory. Substitute the exact downloaded filename if you use another architecture.
+
+## Install a distribution package or run the AppImage
+
+For Debian or Ubuntu, install the local DEB with the package manager so it can resolve dependencies:
+
+```sh
+sudo apt install ./wordcraft-0.18.1-linux-x86_64.deb
+```
+
+For a Fedora system using DNF, use the corresponding RPM:
+
+```sh
+sudo dnf install ./wordcraft-0.18.1-linux-x86_64.rpm
+```
+
+An AppImage is another option. Give the downloaded file execute permission and run it as your ordinary user:
+
+```sh
+chmod +x wordcraft-0.18.1-linux-x86_64.AppImage
+./wordcraft-0.18.1-linux-x86_64.AppImage
+```
+
+Do not run the document editor itself with `sudo`. If an AppImage reports a missing FUSE component or a runtime-library problem, use your distribution's documentation or choose the official DEB/RPM that matches the system. Repeated permission changes will not fix an incompatible library. The release also offers Flatpak files; follow its current installation notes if you prefer that route.
+
+## Check the first document and diagnose launch failures
+
+Launch WordCraft from the application menu or the terminal. Create a short document containing a heading, a paragraph and one line in any language you use regularly. Save a DOCX, close the document after confirming the save, and reopen it. Export a PDF and inspect it separately. This catches basic file-location and font problems before you move real work.
+
+If the window fails to open, launch from the terminal and retain the specific error. Check that the architecture is correct and read the upstream Linux notes about graphics and display-server requirements. Do not add arbitrary graphics flags from unrelated applications. If text appears with missing characters, install or import an appropriate licensed font rather than reinstalling the editor repeatedly.
+
+For upgrades, keep document backups and download the new release's matching asset. An executable filename and a package-manager entry are different update mechanisms, so confirm which installation you are launching. Finish with the [first-document guide](/wordcraft-app-guide), then use the [DOCX compatibility evaluation](/wordcraft-guide) for files you exchange with other people.

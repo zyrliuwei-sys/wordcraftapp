@@ -1,10 +1,11 @@
 import { GuideScreenshot } from '@/components/guide-screenshot';
 
 export const meta = {
-  title: 'WordCraft Web Version: Saving, Fonts and Browser Troubleshooting',
+  title:
+    'WordCraft Browser Troubleshooting: Fonts, Failed Saves and Offline Use',
   description:
-    'Understand the WordCraft web version: start the browser editor, find saved files, add fonts, handle a blank screen and choose when to use desktop.',
-  updated_at: '2026-11-05',
+    'Fix WordCraft browser problems in order: missing fonts, failed saves, blank screens and unreliable offline access. Verify a usable document before closing the tab.',
+  updated_at: '2026-11-13',
   guide: true,
   image: '/imgs/wordcraft/dark',
   imageAlt: 'WordCraft editor in dark mode with the Insert ribbon',
@@ -17,6 +18,7 @@ export const meta = {
     { id: 'fonts', title: 'Fix missing fonts and glyphs' },
     { id: 'blank-screen', title: 'Troubleshoot a blank screen' },
     { id: 'shortcuts', title: 'Keyboard and layout issues' },
+    { id: 'offline', title: 'Diagnose offline access' },
     { id: 'desktop', title: 'Know when to use desktop' },
     { id: 'questions', title: 'Browser questions' },
   ],
@@ -30,7 +32,7 @@ This guide explains the web build hosted by this site and a practical troublesho
 
 WordCraft's browser build uses WebAssembly. In this site's hosted build, the server delivers the application assets; the editing work happens in the browser. Opening the editor is not the same as opening a cloud document service with a server-side file library, shared document history or automatic synchronization between computers.
 
-The build hosted here is based on v0.7.0 and includes local changes for multilingual fonts and browser save handling. You can inspect the [hosted-build notice](/app/NOTICE.md) for the pinned upstream revision and changes. The [official WordCraft project](https://github.com/storytold/wordcraft) may have newer releases. Keep that distinction in mind when following screenshots or reporting an issue.
+The editor hosted here uses the official v0.18.1 application binary, including its multilingual fonts and browser save handling. The independent hosting shell adds loading progress and recovery links. You can inspect the [hosted-build notice](/app/NOTICE.md) for the pinned upstream revision and changes. The [official WordCraft project](https://github.com/storytold/wordcraft) may have newer releases. Keep that distinction in mind when following screenshots or reporting an issue.
 
 Browser caching can make a later visit start faster, but cache contents are not a dependable backup of your work. A browser can evict cached assets, a private session can discard state, and a different browser profile has different storage. Save a document to a location you control and verify that copy.
 
@@ -54,7 +56,7 @@ When describing a failure, note the browser name, operating system, hosted versi
 
 <h2 id="saving">Understand the two browser save outcomes</h2>
 
-In this site's build, saving may open a file picker or result in a normal browser download, depending on browser capabilities and policy. The hosting modifications provide a download fallback when the save picker is denied. Explicitly canceling the picker still cancels the save; cancellation should not be interpreted as a background download.
+In this site's build, saving may open a file picker or result in a normal browser download, depending on browser capabilities and policy. The upstream editor provides a download fallback when the save picker is denied. Explicitly canceling the picker still cancels the save; cancellation should not be interpreted as a background download.
 
 After using Save, look for evidence of one of these outcomes. If a picker appeared, complete it and remember the chosen location. If a download started, inspect the browser's downloads list and locate the file on disk. If neither happened, keep the editor open and investigate instead of assuming that the command succeeded silently.
 
@@ -112,6 +114,14 @@ When the ribbon feels cramped, enlarge the browser window or open the standalone
 
 If the text appears unusually large or small, check browser zoom separately from the editor's document zoom. These controls affect different layers of the interface. Return them to a known setting before comparing layout with another application.
 
+<h2 id="offline">Diagnose offline access without losing a document</h2>
+
+If the connection drops while a document is open, keep the tab open and save a local copy first. Confirm the resulting file in your device's file manager. Reloading to test the connection can discard the only unsaved copy; a successful page reload is not a document-recovery method.
+
+If the editor cannot start offline, reconnect and confirm that all application assets finish loading. A partially cached WebAssembly download cannot supply a working editor. This site does not promise an installed offline application or background document synchronization. Browser storage can be evicted, and a private session can discard it entirely.
+
+For a planned offline session, use a disposable sample to test the exact browser and saving path before leaving the network. Test a fresh launch as well as continued editing in an already open tab. If a fresh launch fails, use the desktop release and a verified local DOCX for the trip. After reconnecting, keep the newest saved copy clearly named; do not assume the website will reconcile multiple versions for you.
+
 <h2 id="desktop">Know when a desktop workflow is the better next step</h2>
 
 Consider the desktop app when browser startup, graphics policy or file prompts repeatedly interrupt your work. Use the [download guide](/download) to find the platform options and official releases. Test a saved copy of the same document so that you can compare environments without introducing unrelated changes.
@@ -124,7 +134,7 @@ For documents exchanged with other applications, follow the [DOCX compatibility 
 
 ### Is the web version the same release as the latest desktop app?
 
-Not necessarily. This site's hosted build is based on v0.7.0. Check its build notice and the official releases separately when comparing features or reporting behavior.
+The hosted editor currently uses the official v0.18.1 web release. Desktop and browser capabilities can still differ. Check its build notice and the official releases separately when comparing features or reporting behavior.
 
 ### Where is my document after I press Save?
 
@@ -140,4 +150,4 @@ Start with fonts and page settings. Then check table widths and object positioni
 
 ### Where should I go after solving the browser setup?
 
-Follow the [online writing guide](/wordcraft-online-guide) for a complete document exercise, or return to the [WordCraft homepage](/) for the editor, tutorials and download entry points.
+Follow the [online editing, formatting and saving workflow](/wordcraft-online-guide) for a complete document exercise, or return to the [WordCraft homepage](/) for the editor, tutorials and download entry points.

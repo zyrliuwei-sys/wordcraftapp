@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import { lazy, type ComponentType } from 'react';
 
 import { baseLocale } from '@/paraglide/runtime.js';
 
@@ -12,8 +12,18 @@ import { baseLocale } from '@/paraglide/runtime.js';
  * local posts via the pure helpers below.
  */
 export const BLOG_POST_SLUGS = [
-  'what-is-shipany',
-  'blocks-vs-components',
+  'wordcraft-tables-formulas-quotation',
+  'wordcraft-comments-track-changes',
+  'wordcraft-font-substitution-layout',
+  'wordcraft-pdf-vs-docx',
+  'wordcraft-docx-garbled-blank-pages',
+  'install-wordcraft-linux',
+  'wordcraft-headers-footers-page-numbers',
+  'wordcraft-image-text-wrapping',
+  'wordcraft-mail-merge-letters',
+  'wordcraft-vs-google-docs',
+  'wordcraft-vs-libreoffice',
+  'wordcraft-automatic-table-of-contents',
 ] as const;
 
 export type BlogPostMeta = {
@@ -47,21 +57,31 @@ export type BlogPostDetail = BlogPost & {
   content?: string;
 };
 
-// Eagerly bundle the local MDX posts (small markdown files), mirroring the
-// static-pages pattern. Keys are absolute from the project root.
-const postModules = import.meta.glob<PostModule>('/src/content/posts/*.mdx', {
+// Only metadata belongs in list/homepage bundles. Article bodies load on demand.
+const postMetas = import.meta.glob<BlogPostMeta>('/src/content/posts/*.mdx', {
   eager: true,
+  import: 'meta',
 });
+const postBodies = import.meta.glob<ComponentType>('/src/content/posts/*.mdx', {
+  import: 'default',
+});
+const lazyBodies = new Map<string, ComponentType>();
 
 export function loadLocalPost(slug: string, locale: string): PostModule | null {
   if (!BLOG_POST_SLUGS.includes(slug as (typeof BLOG_POST_SLUGS)[number])) {
     return null;
   }
-  return (
-    postModules[`/src/content/posts/${slug}.${locale}.mdx`] ??
-    postModules[`/src/content/posts/${slug}.${baseLocale}.mdx`] ??
-    null
-  );
+  const own = `/src/content/posts/${slug}.${locale}.mdx`;
+  const key = postMetas[own]
+    ? own
+    : `/src/content/posts/${slug}.${baseLocale}.mdx`;
+  if (!postMetas[key]) return null;
+  let Body = lazyBodies.get(key);
+  if (!Body) {
+    Body = lazy(async () => ({ default: await postBodies[key]() }));
+    lazyBodies.set(key, Body);
+  }
+  return { meta: postMetas[key], default: Body };
 }
 
 function localPostToItem(slug: string, meta: BlogPostMeta): BlogPost {

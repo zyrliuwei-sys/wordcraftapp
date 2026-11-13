@@ -1,12 +1,15 @@
+import { Suspense } from 'react';
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import { MDXProvider } from '@mdx-js/react';
 import { ArrowLeft, Calendar } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
+import { pageHead } from '@/lib/page-head';
 import { m } from '@/paraglide/messages.js';
 import { getLocale, localizeUrl } from '@/paraglide/runtime.js';
 import { Footer } from '@/blocks/footer';
+import { GuideNextSteps } from '@/blocks/guide-reading';
 import { Header } from '@/blocks/header';
 import { MarkdownContent } from '@/components/markdown-content';
 import { mdxComponents } from '@/components/mdx-components';
@@ -28,15 +31,41 @@ export const Route = createFileRoute('/blog/$slug')({
     const canonical = localizeUrl(`${envConfigs.app_url}/blog/${post.slug}`, {
       locale: locale as any,
     }).href;
+    const head = pageHead(
+      `/blog/${post.slug}`,
+      locale,
+      `${post.title} | ${envConfigs.app_name}`,
+      post.description
+    );
     return {
+      ...head,
       meta: [
-        { title: `${post.title} | ${envConfigs.app_name}` },
-        { name: 'description', content: post.description },
-        ...(post.source === 'local'
-          ? [{ name: 'robots', content: 'noindex,follow' }]
-          : []),
+        ...head.meta.filter(
+          (tag) => !('property' in tag && tag.property === 'og:type')
+        ),
+        { property: 'og:type', content: 'article' },
       ],
-      links: [{ rel: 'canonical', href: canonical }],
+      scripts: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: post.title,
+            description: post.description,
+            datePublished: post.createdAt,
+            mainEntityOfPage: canonical,
+            publisher: {
+              '@type': 'Organization',
+              name: envConfigs.app_name,
+              url: envConfigs.app_url,
+            },
+            ...(post.authorName
+              ? { author: { '@type': 'Person', name: post.authorName } }
+              : {}),
+          }).replace(/</g, '\\u003c'),
+        },
+      ],
     };
   },
   component: BlogPostPage,
@@ -64,7 +93,7 @@ function BlogPostPage() {
           </Link>
 
           <header className="border-border mt-8 mb-6 border-b pb-6">
-            <h1 className="text-foreground text-3xl font-semibold tracking-tight md:text-4xl">
+            <h1 className="text-foreground font-display text-4xl leading-tight md:text-5xl">
               {post.title}
             </h1>
             {post.description && (
@@ -101,14 +130,22 @@ function BlogPostPage() {
           )}
 
           {LocalContent ? (
-            <div className="text-foreground/90 text-[15px] leading-7">
+            <div className="wc-prose">
               <MDXProvider components={mdxComponents}>
-                <LocalContent />
+                <Suspense fallback={null}>
+                  <LocalContent />
+                </Suspense>
               </MDXProvider>
             </div>
           ) : (
             <MarkdownContent content={post.content || ''} />
           )}
+          <p className="text-muted-foreground mt-10 text-xs leading-relaxed">
+            <Link href="/about" className="underline underline-offset-4">
+              {m['wc.blog.independent']()}
+            </Link>
+          </p>
+          <GuideNextSteps slug={post.slug} />
         </article>
       </main>
       <Footer />

@@ -58,11 +58,9 @@ compatibility.textContent = label('Use compatibility mode', '使用兼容模式'
 document.getElementById('wordcraft_download').textContent = label('Download desktop app', '下载桌面版');
 document.getElementById('wordcraft_back').textContent = label('← Back to website', '← 返回网站');
 
-// The editor picks its interface language from navigator.languages. The stock
-// web build embeds no CJK, Arabic or Thai font, so those interfaces render as
-// "??" and empty boxes. Until a build with multilingual fonts is deployed
-// (build.mjs then exports multilingualFonts = true), run those visitors in
-// English. Documents keep whatever language they contain.
+// The verified release includes multilingual fonts. A minimal future build
+// without that manifest flag falls back to an English interface so its labels
+// remain drawable. Document language is not changed.
 const UNDRAWABLE_UI = /^(zh|ja|ko|ar|fa|th)\b/i;
 function pinDrawableInterfaceLanguage(hasMultilingualFonts) {
   if (hasMultilingualFonts) return;

@@ -5,6 +5,7 @@ import { m } from '@/paraglide/messages.js';
 import { getLocale } from '@/paraglide/runtime.js';
 import { SectionHeader } from '@/components/section-header';
 import { getGuides } from '@/content/guides';
+import { getLocalPosts } from '@/content/posts';
 
 export function Guides() {
   const guides = getGuides(getLocale());
@@ -51,6 +52,36 @@ export function Guides() {
               </div>
             </Link>
           ))}
+        </div>
+        <div className="border-border mt-10 border-t pt-10">
+          <div className="mb-7 flex flex-wrap items-baseline justify-between gap-4">
+            <h3 className="font-display text-3xl">
+              {m['wc.blog.practical']()}
+            </h3>
+            <Link
+              href="/blog"
+              className="hover:text-redline inline-flex items-center gap-2 text-sm underline underline-offset-4"
+            >
+              {m['wc.blog.browse']()}
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+          <p className="text-muted-foreground mb-6 max-w-2xl text-sm">
+            {m['wc.blog.intro']()}
+          </p>
+          <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
+            {getLocalPosts(getLocale()).map((post) => (
+              <li key={post.slug} className="border-border border-t">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="hover:text-redline flex items-start justify-between gap-4 py-5 text-sm leading-relaxed"
+                >
+                  {post.title}
+                  <ArrowUpRight className="mt-1 size-4 shrink-0" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

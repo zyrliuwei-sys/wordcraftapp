@@ -1,0 +1,44 @@
+import { GuideScreenshot } from '@/components/guide-screenshot';
+
+export const meta = {
+  title: 'WordCraft Image Wrapping: Inline, Square and Other Modes',
+  description:
+    'Choose a predictable wrapping mode, position a picture and check what happens when surrounding text changes.',
+  created_at: '2026-11-13',
+};
+
+An image can look correct until you add a paragraph above it. Its wrapping mode, anchor and positioning rules determine what happens next. Choose those rules before fine-tuning the picture's location. This exercise uses one ordinary picture beside a few paragraphs, allowing you to compare behaviors without the complexity of a brochure or a multi-column report.
+
+## Begin with an inline image
+
+Create a document with three short paragraphs. Insert a picture between the first and second paragraphs, then select it and find Wrap Text in the contextual picture or Arrange controls. Start with In Line with Text. WordCraft's [wrapping menu source](https://github.com/storytold/wordcraft/blob/v0.18.1/crates/ui-egui/src/ribbon/arrange.rs) lists the available modes; controls can vary across releases.
+
+An inline picture participates in the text flow much like a large character. Put it in its own paragraph and use paragraph alignment to center it. Resize from a corner while preserving its proportions. Use paragraph spacing above and below instead of adding empty paragraphs to imitate a margin.
+
+Now type a new paragraph above it. The picture should remain part of the document's reading sequence. This makes inline positioning a useful starting point for screenshots, step-by-step instructions and documents that another person will edit extensively.
+
+## Compare Square with Top and Bottom
+
+Switch the selected picture to Square if you want text beside it. Reduce its width enough to leave a readable column of text, then inspect both the image boundary and the space between text and picture. A narrow strip containing one or two words per line is usually a sign that the picture is too wide for that placement.
+
+Top and Bottom keeps text above and below the picture instead of alongside it. Try this for a diagram or screenshot that deserves its own horizontal band while still using floating positioning. Check the result near a page boundary: a picture may need to move to preserve enough room for the surrounding paragraphs.
+
+For either mode, inspect whether the picture moves with its paragraph or stays at a fixed page position, where those settings are available. An anchor associates the object with document content; the apparent position on the page is only one part of its behavior. Add and remove a sentence before the anchor to test the relationship.
+
+## Use Behind and In Front of Text deliberately
+
+Behind Text can support a decorative background, but ordinary body text must remain readable. Use a quiet image and verify contrast throughout the overlapping area. In Front of Text can cover words, which makes it unsuitable for most instructional pictures. It is useful only when that overlap is intentional and carefully checked.
+
+If you cannot select a picture after moving it behind text, use the application's object-selection tools or undo the change. Do not keep adding duplicate pictures because the original is hard to click. Check for an existing object before inserting a replacement.
+
+## Verify the edited and exported document
+
+After choosing a mode, insert a paragraph above the image and a longer heading below it. Inspect the following page as well as the current one. Save, reopen the DOCX and export a PDF. Confirm that the picture is neither clipped nor covering text, and that a caption remains with the intended image.
+
+Keep the original image file if further editing is likely. For predictable handoff, use the simplest wrapping mode that achieves the layout. Continue with [PDF versus DOCX delivery](/blog/wordcraft-pdf-vs-docx) or the [online editing and saving workflow](/wordcraft-online-guide).
+
+<GuideScreenshot
+  base="/imgs/wordcraft/layout"
+  alt="WordCraft Layout ribbon with text wrapping around a circular object"
+  caption="Wrapping controls the relationship between floating objects and nearby paragraphs. Upstream product screenshot, not a record of this exercise; controls may differ by release. Source: ArtCraft / WordCraft."
+/>

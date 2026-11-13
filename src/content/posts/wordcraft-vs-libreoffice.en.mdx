@@ -1,0 +1,36 @@
+export const meta = {
+  title: 'WordCraft vs LibreOffice Writer: Compare Your Document Workflow',
+  description:
+    'Evaluate two open-source document workflows with styles, sections, review changes and a controlled DOCX round trip.',
+  created_at: '2026-11-13',
+};
+
+WordCraft and LibreOffice Writer can both be considered for document work, but a feature list is only the beginning of a useful comparison. The meaningful test is whether your documents remain editable and your everyday tasks are comfortable. Choose a representative sample, preserve its original and evaluate each application independently. Do not repeatedly convert the same file back and forth before establishing a baseline.
+
+This comparison provides a practical test plan. It does not claim that either application was faster in a benchmark or that one achieves a measured compatibility percentage.
+
+## Decide whether you need a word processor or a suite
+
+WordCraft focuses on writing and document layout, with a ribbon interface and desktop and web builds described by its [official project](https://github.com/storytold/wordcraft/tree/v0.18.1). This site's browser build provides another way to open the editor, but it should be evaluated separately from the desktop application when fonts, saving and offline access matter.
+
+LibreOffice includes Writer alongside Calc, Impress, Draw, Base and Math. If your work regularly moves between spreadsheets, presentations and documents, the suite context may matter as much as the word processor. Review the [official LibreOffice overview](https://www.libreoffice.org/) and list the applications you actually need before comparing installation choices.
+
+Start with your operating system, required formats and recurring tasks. A short list such as “edit a report, review changes and export a PDF” is more useful than trying to rank every feature in both products.
+
+## Run the same editing exercise in each
+
+Prepare a sample report with a cover, three heading levels, a table, an image, a footnote and a header with page numbering. Make one copy for each application. Record which fonts are installed so a missing typeface does not masquerade as a general layout failure.
+
+In each copy, change the body style, move a heading, insert a table row and resize the image. Update the table of contents if the document contains one. Look at the result and the effort required to reach it. If you needed a workaround, write it down precisely instead of relying on a vague impression that the editor was difficult.
+
+Then enable tracked changes, replace a sentence and add a comment. Save the result and reopen it in the same application. This establishes whether your own workflow works before you introduce another editor into the comparison.
+
+## Check a controlled DOCX round trip
+
+LibreOffice's official instructions describe opening Word files in Writer and choosing a Microsoft Office format through Save As. They also explain that macro compatibility is limited. Do not assume an existing Word macro will run simply because its document opens. See [Using Microsoft Office and LibreOffice](https://help.libreoffice.org/latest/en-US/text/shared/guide/ms_user.html).
+
+Save a DOCX copy from each application under a distinct name. Open those copies in the recipient's editor and inspect the same features: heading structure, table width, image position, footnotes, page numbering and review marks. Keep a PDF reference from each source copy for visual comparison. If a problem appears, repeat the test with just the affected feature in a small document.
+
+For a stable long-term workflow, choose one editable master format and a clear handoff format. Avoid treating every intermediate conversion as a new authoritative master. Our [DOCX compatibility guide](/wordcraft-guide) supplies a fuller inspection sequence, while [PDF versus DOCX](/blog/wordcraft-pdf-vs-docx) helps choose the final deliverable.
+
+The best fit is the application that completes your required tasks with acceptable results on your actual files. Keep the test notes so you can revisit the decision after a significant release or a change in your team's document requirements.

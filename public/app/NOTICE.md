@@ -1,27 +1,14 @@
 # WordCraft web build hosted by WordCraftApp
 
-Based on [WordCraft v0.7.0](https://github.com/storytold/wordcraft/tree/fc41918814f62645b6746ed68e71e8c2c2e85d6f),
-MIT OR Apache-2.0. Copyright (c) 2026 ArtCraft Team and WordCraft contributors.
-See LICENSE-MIT, LICENSE-APACHE and licenses/UPSTREAM-NOTICE.txt.
+This editor uses the official [WordCraft v0.18.1 web release](https://github.com/storytold/wordcraft/releases/tag/v0.18.1), published November 12, 2026 at 00:04:47 UTC, from source revision `079f478bd85df7bcc567e3bafa7d7219096f9c3c`.
 
-Local changes: the web font build filter includes Noto Sans CJK SC, Noto Sans
-Arabic and Noto Sans Thai Regular. The original web filter includes only BIZ
-UDPGothic Regular, which leaves simplified Chinese labels without glyphs.
-Noto Sans CJK SC supplies Chinese and fallback glyphs for Japanese and Korean.
-The application and document renderer share these embedded font bytes.
+Upstream archive: `wordcraft-web-0.18.1.zip`.
+SHA-256: `3daa7c2d1f209a7eeb2527fcefa3fe31e875848fb1970d68f54edae55fe0bc9f`.
 
-Font input: [craft-fonts](https://github.com/storytold/craft-fonts/tree/3d9ab3a132ed0eff457e424226a435a901da30d3).
-The fonts remain unmodified and retain their SIL Open Font License 1.1;
-license texts and author/source attribution are under licenses/.
-Proprietary fonts are not bundled. Missing document fonts use substitutes;
-users can import their own licensed TTF, OTF, TTC, WOFF or WOFF2 using Add Font…
-at the bottom of the editor's font menu, or by dropping a font file on it.
+MIT OR Apache-2.0. Copyright (c) 2026 ArtCraft Team and WordCraft contributors. See LICENSE-MIT, LICENSE-APACHE and licenses/UPSTREAM-NOTICE.txt.
 
-The save picker falls back to a normal download if browser policy denies it;
-an explicit cancellation still cancels the save.
+The upstream application binary is unmodified. Its WebAssembly is gzip-compressed for delivery, and its JavaScript module points to the content-addressed filename. The official release now includes multilingual fonts. Font licenses and upstream attribution are under licenses/; proprietary fonts are not bundled. Missing document fonts may still need a licensed substitute or an imported font.
 
-The hosting shell adds download progress, startup error handling and retry /
-WebGL compatibility links. It does not upload document contents.
+The independent hosting shell adds download progress, startup error handling, retry and WebGL compatibility links. It does not upload document contents or provide cloud document storage. Save behavior is supplied by the upstream editor and browser.
 
-Reproduce from this site's source with scripts/update-wordcraft-web.sh 0.7.0.
-The patch and pinned source/font revisions are kept in scripts/wordcraft-web/.
+Reproduce with `scripts/update-wordcraft-web.sh 0.18.1`. The script verifies the pinned release archive before packaging it. WordCraftApp is an independent third-party guide and is not operated by the WordCraft developers.

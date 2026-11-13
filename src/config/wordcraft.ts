@@ -3,8 +3,8 @@
  * official URLs. Bump WORDCRAFT_VERSION when a new GitHub release ships (and
  * refresh public/app/ with scripts/update-wordcraft-web.sh).
  */
-export const WORDCRAFT_VERSION = '0.7.0';
-export const WORDCRAFT_RELEASE_DATE = '2026-10-14';
+export const WORDCRAFT_VERSION = '0.18.1';
+export const WORDCRAFT_RELEASE_DATE = '2026-11-12';
 
 export const WORDCRAFT_REPO = 'https://github.com/storytold/wordcraft';
 export const WORDCRAFT_RELEASES = `${WORDCRAFT_REPO}/releases`;
@@ -63,16 +63,6 @@ export const DOWNLOADS: Record<PlatformId, DownloadGroup[]> = {
         {
           label: 'Portable (.zip)',
           file: 'wordcraft-<ver>-windows-arm64-portable.zip',
-        },
-      ],
-    },
-    {
-      title: 'x86 · 32-bit',
-      files: [
-        { label: 'Installer (.msi)', file: 'wordcraft-<ver>-windows-x86.msi' },
-        {
-          label: 'Portable (.zip)',
-          file: 'wordcraft-<ver>-windows-x86-portable.zip',
         },
       ],
     },
@@ -138,7 +128,7 @@ export const DOWNLOADS: Record<PlatformId, DownloadGroup[]> = {
   ],
   other: [
     {
-      title: 'FreeBSD 14 · x86_64',
+      title: 'FreeBSD · x86_64',
       files: [
         {
           label: 'Tarball (.tar.gz)',

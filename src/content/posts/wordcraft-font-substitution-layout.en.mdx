@@ -1,0 +1,43 @@
+import { GuideScreenshot } from '@/components/guide-screenshot';
+
+export const meta = {
+  title: 'Fix WordCraft Layout Shifts Caused by Font Substitution',
+  description:
+    'Diagnose changed line breaks, missing glyphs and shifted page counts by checking fonts before changing document margins.',
+  created_at: '2026-11-13',
+};
+
+A document that gained an extra page after opening may have a font problem rather than a margin problem. Two fonts at the same point size can have different character widths and line metrics. A substituted font can therefore move a heading, widen a table or change where a paragraph wraps. Start by identifying the first visible difference instead of shrinking the entire document to force the original page count.
+
+## Establish a reference and classify the symptom
+
+Keep the original DOCX unchanged. Ask the sender for a PDF or a screenshot of one affected page, ideally with the font names used in the document. Record the paper size, orientation and margins too. Without a reference, it is difficult to distinguish an import difference from the author's intended layout.
+
+Open a copy in WordCraft and compare the first paragraph that wraps differently. There are two useful categories:
+
+- Readable letters with different spacing usually point toward a different typeface, weight, size or paragraph setting.
+- Empty boxes or missing symbols suggest that the chosen font and its fallbacks lack required glyphs. Text corruption is a separate possibility and needs a different investigation.
+
+Check ordinary text, bold text, headings and symbols independently. A regular font may be present while its bold or italic face is missing. Also inspect mixed-language phrases; one line can use several fallback fonts even when the font menu shows a single requested family.
+
+## Fix the font supply before adjusting layout
+
+On desktop, install the properly licensed font through the operating system, then restart the application if necessary. In the hosted web editor, use Add Font from the font menu for a supported font file. A font available to a desktop word processor is not automatically available to a WebAssembly document renderer. The [hosted-build notice](/app/NOTICE.md) explains the bundled fonts and upstream version.
+
+If you cannot obtain the original font, select a substitute intentionally. Apply it through the document's paragraph styles so the same change reaches all matching headings or body paragraphs. Check that the replacement covers the required writing system and includes the weights you need. Avoid making dozens of local font changes before the underlying style is correct.
+
+Retest the short reference passage after adding or replacing the font. If line breaks now match more closely, continue through the document. If they do not, compare paragraph spacing, line spacing, indents and character spacing. Change one variable at a time and keep a saved checkpoint so you can reverse an unsuccessful adjustment.
+
+## Inspect the places where small differences accumulate
+
+Look at narrow table cells, long headings, captions, footnotes and paragraphs near page endings. These are often the first places where a small metric difference becomes visible. Check headers and footers separately; they may use another font or inherit different formatting.
+
+Export a PDF and reopen it in another viewer. Confirm that accented letters, non-Latin characters, mathematical symbols and bullets remain readable. A PDF is useful for delivering a stable reading copy, but it still needs inspection for missing glyphs. Keep an editable DOCX alongside it if further revisions are expected.
+
+If the document remains broken with known fonts and matching page settings, move to the [garbled DOCX and blank-page checklist](/blog/wordcraft-docx-garbled-blank-pages). For a browser-only problem, follow [browser font and save troubleshooting](/wordcraft-web-version-guide). Record the font names and the first affected paragraph when reporting the issue; that is more useful than only reporting a changed page count.
+
+<GuideScreenshot
+  base="/imgs/wordcraft/design"
+  alt="WordCraft Design ribbon showing style sets and a formatted document"
+  caption="Check shared styles before applying isolated font corrections. Upstream product screenshot, not a record of this exercise; controls may differ by release. Source: ArtCraft / WordCraft."
+/>

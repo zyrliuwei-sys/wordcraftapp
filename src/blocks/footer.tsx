@@ -19,6 +19,7 @@ export function Footer() {
         { label: m['wc.nav.download'](), href: '/download' },
         { label: m['wc.nav.online'](), href: '/online' },
         { label: m['wc.nav.tutorials'](), href: '/tutorials' },
+        { label: m['wc.nav.blog'](), href: '/blog' },
         {
           label: m['wc.vs.title'](),
           href: '/wordcraft-vs-microsoft-word',
@@ -44,6 +45,8 @@ export function Footer() {
     {
       title: m['wc.footer.legal'](),
       links: [
+        { label: m['wc.nav.about'](), href: '/about' },
+        { label: m['wc.nav.contact'](), href: '/contact' },
         { label: supportEmail, href: `mailto:${supportEmail}` },
         { label: m['wc.footer.privacy'](), href: '/privacy-policy' },
         { label: m['wc.footer.terms'](), href: '/terms-of-service' },

@@ -1,0 +1,34 @@
+export const meta = {
+  title: 'WordCraft Mail Merge: Generate Letters from a CSV',
+  description:
+    'Prepare clean recipient data, insert merge fields, preview edge cases and generate a document you can inspect before sharing.',
+  created_at: '2026-11-13',
+};
+
+Mail merge combines a reusable letter with a recipient list. The difficult part is often the data: a missing name, a postcode treated as a number or an address split into the wrong columns. Start with three fictional recipients and complete a small merge before using a live mailing list. This tutorial generates letters for review; it does not assume that a merge command sends email.
+
+WordCraft's [Mailings controls](https://github.com/storytold/wordcraft/blob/v0.18.1/crates/ui-egui/src/ribbon/mailings.rs) provide recipient selection, merge fields, preview and finish commands. The precise data-source dialog may differ by platform, so use a CSV file with simple, consistent column names.
+
+## Prepare and validate the recipient list
+
+Create a spreadsheet with columns named FirstName, LastName, Address1, City and PostalCode. Enter three practice records: one short name, one long name and one record with an optional value left empty. Treat postcodes as text so leading zeros are preserved. Export the sheet as UTF-8 CSV and reopen that CSV to check accents and column boundaries.
+
+Use one recipient per row and one header row. A comma inside an address needs proper CSV quoting; exporting from a spreadsheet is safer than assembling a complex file manually. Remove accidental blank rows at the end and confirm that each column contains the intended type of information.
+
+Keep the original spreadsheet and the exported CSV separately. If the merge preview is wrong, this lets you distinguish a source-data problem from a field-placement problem in the letter.
+
+## Create the template and insert real fields
+
+Write the letter as ordinary text first, leaving space for the address and greeting. Open Mailings, choose the letter merge type and use Select Recipients to load your CSV. Inspect the recipient list before proceeding. If a whole row appears in one column, stop and fix the CSV delimiter or import settings.
+
+Place the caret where a name belongs and use Insert Merge Field to select the matching column. Repeat for the address and greeting. Typing a name between angle brackets is not a substitute for inserting an actual merge field. Keep spaces and punctuation outside the fields where they belong, and avoid adding a comma that would remain awkwardly visible when an optional field is empty.
+
+For the first exercise, use a simple greeting that works for every practice record. Conditional rules can be added after the basic merge succeeds; introducing several rules at once makes errors harder to isolate.
+
+## Preview the awkward records before finishing
+
+Turn on Preview Results and move through all three recipients. Check the first record, the longest address and the record with missing data. Look for extra blank lines, doubled spaces, broken accents and text that spills onto an additional page. Correct the template or source data and preview again.
+
+Use Finish & Merge to generate the resulting document. Inspect its recipient order and the boundary between letters. Confirm that each letter has the correct name and address, and that no field markers remain unexpanded. Save the output under a name distinct from the template so you can repeat the merge later without rebuilding the layout.
+
+Do not send a combined document containing every recipient's details to each individual recipient. Prepare the appropriate individual outputs or printing workflow and verify the destination for each. Keep the recipient list private and remove unnecessary columns before sharing sample data for troubleshooting. For final delivery, read [when to export PDF](/blog/wordcraft-pdf-vs-docx); for page-boundary problems, see [sections and page numbers](/blog/wordcraft-headers-footers-page-numbers).
