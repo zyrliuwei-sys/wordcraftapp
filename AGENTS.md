@@ -525,6 +525,7 @@ Keep `.env.example` minimal; don't add provider keys to it.
 7. **Always verify `pnpm build` passes** after making changes
 8. **Return `respData`/`respErr`** from API routes
 9. **Run the `security-scan` skill before every `git commit`** — it checks for leaked secrets, injection/XSS/logic vulnerabilities in the diff, and `.gitignore`/`.dockerignore` gaps. HIGH findings block the commit.
+10. **Work directly on `main`.** The owner prefers edits, commits, and releases on `main`; do not create new branches or linked worktrees unless the owner explicitly requests one.
 
 ## Cloud Sandbox Notes (ShipAny Code / e2b)
 
