@@ -28,11 +28,13 @@ export function SiteHeader({
   navLinks,
   logoAlt,
   cta,
+  secondaryCta,
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
-  /** Public editor action; account navigation belongs in authenticated layouts. */
+  /** Primary public action, such as opening the editor. */
   cta?: HeaderCta;
+  secondaryCta?: HeaderCta;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -85,6 +87,14 @@ export function SiteHeader({
         {/* Desktop actions */}
         <div className="hidden items-center gap-3 xl:flex">
           <ThemeToggle />
+          {secondaryCta && (
+            <Link
+              href={secondaryCta.href}
+              className={buttonVariants({ variant: 'ghost' })}
+            >
+              {secondaryCta.label}
+            </Link>
+          )}
           {cta && (
             <a href={cta.href} className={cn(buttonVariants(), 'gap-1.5')}>
               {cta.label}
@@ -133,13 +143,23 @@ export function SiteHeader({
               )
             )}
           </nav>
-          <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
-            <ThemeToggle />
-            <div className="flex-1" />
+          <div className="border-border mt-3 border-t pt-3">
+            <div className="flex items-center justify-between gap-2">
+              <ThemeToggle />
+              {secondaryCta && (
+                <Link
+                  href={secondaryCta.href}
+                  className={buttonVariants({ variant: 'ghost' })}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {secondaryCta.label}
+                </Link>
+              )}
+            </div>
             {cta && (
               <a
                 href={cta.href}
-                className={cn(buttonVariants(), 'gap-1.5')}
+                className={cn(buttonVariants(), 'mt-3 w-full gap-1.5')}
                 onClick={() => setMobileOpen(false)}
               >
                 {cta.label}

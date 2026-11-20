@@ -17,6 +17,7 @@ export function Header() {
     <SiteHeader
       navLinks={navLinks}
       logoAlt={m['wc.logo_alt']()}
+      secondaryCta={{ href: '/admin', label: m['wc.nav.admin_login']() }}
       cta={{ href: '/#wordcraft-editor', label: m['wc.cta.online']() }}
     />
   );
